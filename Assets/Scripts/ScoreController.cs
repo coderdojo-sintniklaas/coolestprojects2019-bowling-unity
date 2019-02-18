@@ -12,12 +12,13 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class ScoreController : MonoBehaviour
 {
+    const string NaamScoreBestand = @"scores.json";
     
     public List<ScoreData> scores { get; set; }
-    private string NaamScoreBestand = @"scores.json";
     
     public ScoreData scoreSpelerA = new ScoreData();
     public ScoreData scoreSpelerB = new ScoreData();
+    public ScoreData actieveSpelerScore;
     
     void Start()
     {      
@@ -39,26 +40,22 @@ public class ScoreController : MonoBehaviour
     public void ActiveerSpelerA()
     {
         ScoreBordController.ActiveerSpeler('A').Wait();
+        actieveSpelerScore = scoreSpelerA;
     }
 
     public void ActiveerSpelerB()
     {
         ScoreBordController.ActiveerSpeler('B').Wait();
+        actieveSpelerScore = scoreSpelerB;
     }
     
-    public void UpdateScoreA(int score)
+    public void UpdateScore(int score)
     {
-        scoreSpelerA.score += score;
-        ToonScoresOpBord();
-    }
-    
-    public void UpdateScoreB(int score)
-    {
-        scoreSpelerB.score += score;
+        actieveSpelerScore.score += score;
         ToonScoresOpBord();
     }
 
-    void OnApplicationQuit()
+    void OnDestroy()
     {
         // Bij afsluiten van de applicatie, punten bewaren
         BewaarScoreHistoriekInBestand(); 
@@ -119,7 +116,7 @@ public class ScoreController : MonoBehaviour
 
     private async void ToonScoresOpBord()
     {
-        ScoreBordController.ToonScores(scoreSpelerA, scoreSpelerB)
+        ScoreBordController.ToonScores(scoreSpelerA, scoreSpelerB);
     }
 
 }

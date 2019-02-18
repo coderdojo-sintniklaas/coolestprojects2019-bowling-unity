@@ -5,21 +5,20 @@ using UnityEngine;
 
 public class SpelSceneController : MonoBehaviour
 {
-    public TMP_Text ScoreSpelerA;
-    public TMP_Text ScoreSpelerB;
+    public TMP_Text scoreSpelerA;
+    public TMP_Text scoreSpelerB;
 
 
     public void ToonScores(int scoreA, int scoreB)
     {
-        ScoreSpelerA.text = scoreA.ToString();
-        ScoreSpelerB.text = scoreB.ToString();
+        scoreSpelerA.text = scoreA.ToString();
+        scoreSpelerB.text = scoreB.ToString();
     }
 
     public void TestScores()
     {
-        ScoreSpelerA.text = "1";
-        ScoreSpelerB.text = "2";
-       
+        scoreSpelerA.text = "1";
+        scoreSpelerB.text = "2";
     }
     
 }
