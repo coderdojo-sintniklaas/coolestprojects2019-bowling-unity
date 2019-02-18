@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using DefaultNamespace;
-using Newtonsoft.Json;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.SocialPlatforms.Impl;
+using Random = System.Random;
 
 public class ScoreController : MonoBehaviour
 {
@@ -65,6 +60,11 @@ public class ScoreController : MonoBehaviour
     {
         scores.Add(scoreSpelerA);
         scores.Add(scoreSpelerB);
+    }
+
+    public void Test()
+    {
+        scores.Add(new ScoreData(){naam="tim", score = new Random().Next(100)});
     }
 
     private void LaadSpelerNamenUitBestand()
