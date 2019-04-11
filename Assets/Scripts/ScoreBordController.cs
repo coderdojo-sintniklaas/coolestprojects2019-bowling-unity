@@ -7,34 +7,34 @@ namespace DefaultNamespace
 {
     public static class ScoreBordController
     {
-        const string ScoreBordIp = @"192.168.1.1";
+        const string ScoreBordIp = Instellingen.scoreServerIp;
 
-        public static async Task ToonScores(ScoreData scoreSpelerA, ScoreData scoreSpelerB)
+        public static async Task ToonScores(int scoreSpelerA, int scoreSpelerB, char speler)
         {
             // Zet de juiste scores op het scorebord
+            Debug.Log($@"Scorebord wijzigen: A->{scoreSpelerA}, B->{scoreSpelerB}, Actief->{speler} ");
+
             var client = new HttpClient();
-            client.BaseAddress = new Uri("http://" + ScoreBordIp);
-
-            var response = await client.GetAsync($@"ScoreA={scoreSpelerA.score}&ScoreB={scoreSpelerB.score}");
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                Debug.Log("Scorebord wijzigen gaf fout: " + response.StatusCode);
+                client.BaseAddress = new Uri("http://" + ScoreBordIp);
+
+                var response = client.GetAsync($@"/zetscore?ScoreA={scoreSpelerA}&ScoreB={scoreSpelerB}&Speler={speler}").Result;
+                if (!response.IsSuccessStatusCode)
+                {
+                    Debug.LogError("Scorebord wijzigen gaf fout: " + response.StatusCode);
+                }
+                else
+                {
+                    var antwoord = response.Content.ReadAsStringAsync().Result;
+                    Debug.Log("Scorebord wijzigen, antwoord van server: " + antwoord);
+                }
             }
-            client.Dispose();
-        }
-
-        public static async Task ActiveerSpeler(char speler)
-        {
-            // Toont welke speler actief is op het scorebord
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("http://" + ScoreBordIp);
-
-            var response = await client.GetAsync($@"Speler={speler}");
-            if (!response.IsSuccessStatusCode)
+            catch (Exception e)
             {
-                Debug.Log("Scorebord wijzigen gaf fout: " + response.StatusCode);
+                Debug.LogError(e);
+                client.Dispose();                
             }
-            client.Dispose();  
         }
     }
 }

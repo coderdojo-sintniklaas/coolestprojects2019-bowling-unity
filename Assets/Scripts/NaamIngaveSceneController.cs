@@ -21,12 +21,11 @@ public class NaamIngaveSceneController : MonoBehaviour
     public void VerderKnopKlik()
     {
         var spelerA = new ScoreData {naam = InvoerNaamSpelerA.text};
-
         var spelerB = new ScoreData {naam = InvoerNaamSpelerB.text};
 
         // Bewaar gegevens in bestanden
         HulpFuncties.BewaarGegevensInBestand(spelerA, "invoerSpelerA.json");
-        HulpFuncties.BewaarGegevensInBestand(spelerA, "invoerSpelerA.json");
+        HulpFuncties.BewaarGegevensInBestand(spelerB, "invoerSpelerB.json");
 
         // Laad volgende scene
         SceneManager.LoadScene("spelScene");
