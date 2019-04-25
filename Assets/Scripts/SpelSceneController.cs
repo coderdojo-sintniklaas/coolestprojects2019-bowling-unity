@@ -214,6 +214,15 @@ public class SpelSceneController : MonoBehaviour
 
             HulpFuncties.BewaarGegevensInBestand(scoreSpelerA, "scoreSpelerA.json");
             HulpFuncties.BewaarGegevensInBestand(scoreSpelerB, "scoreSpelerB.json");
+            if (spelData.spelerA.score > spelData.spelerB.score)
+            {
+                HulpFuncties.BewaarGegevensInBestand(scoreSpelerA, "scoreWinnaar.json");
+            }
+            else
+            {
+                HulpFuncties.BewaarGegevensInBestand(scoreSpelerB, "scoreWinnaar.json");
+            }
+              
 
             // Voeg toe aan historiek
             var scoreController = GameObject.FindObjectOfType<ScoreController>();
